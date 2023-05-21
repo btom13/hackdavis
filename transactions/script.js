@@ -42,7 +42,7 @@
         let date = document.createElement("td");
         let operation = document.createElement("td");
         type.innerHTML = json[i].type ? json[i].type : "";
-        quantity.innerHTML = json[i].quantity ? json[i].quantity : "x";
+        quantity.innerHTML = json[i].quantity ? json[i].quantity : "1";
         date.innerHTML = json[i].date
           ? new Date(json[i].date).toLocaleDateString()
           : "";
