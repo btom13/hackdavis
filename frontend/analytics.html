@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="analyticsStyles.css" rel="stylesheet" />
+    <script
+      src="https://kit.fontawesome.com/d296a4603c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="analytics.js" defer></script>
+
+    <title>Analytics</title>
+  </head>
+  <body>
+    <header>Analytics</header>
+    <button id="back-btn">Back</button>
+    <div class="container">
+      <!-- <div id="date">
+        <p>Month</p>
+        <input type="date" />
+      </div> -->
+      <div id="type">
+        <p>Type of Clothing</p>
+        <select class="selectType">
+          <option value="">--Type--</option>
+        </select>
+      </div>
+      <canvas id="graph"></canvas>
+
+      <div id="graphs"></div>
+      <div id="history">
+        <button id="transaction-btn">Transactions</button>
+      </div>
+    </div>
+  </body>
+</html>

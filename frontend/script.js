@@ -14,9 +14,19 @@
   const closeBtnRemove = document.querySelector("#closeBtn.remove");
   const category = document.querySelector(".category.add");
   const categoryRemove = document.querySelector(".category.remove");
+  const token = localStorage.getItem("token");
+  const logout = document.querySelector(".logoutButton");
+  logout.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "./index.html";
+  });
   let categories = { clothes: [], accessories: [], other: [] };
   fetch(
-    "https://aggie-reuse.azurewebsites.net/api/GetCategories?code=ndxaiFhA5WDFWWCzN6oJKf1Z_O_lECDFY-TzzwMmqpUfAzFuZ5E7aw=="
+    "https://aggie-reuse.azurewebsites.net/api/GetCategories?code=ndxaiFhA5WDFWWCzN6oJKf1Z_O_lECDFY-TzzwMmqpUfAzFuZ5E7aw==&token=",
+    {
+      method: "POST",
+      body: JSON.stringify({ token: token }),
+    }
   )
     .then((res) => res.json())
     .then((data) => {
@@ -29,7 +39,11 @@
     });
   let inventory = { clothes: {}, accessories: {}, other: {} };
   fetch(
-    "https://aggie-reuse.azurewebsites.net/api/GetAllItems?code=-Fjj8lcCpsLQQFZSMehNNTAh_yOFTzo9OSfOmz__Bhj_AzFuizWnPg=="
+    "https://aggie-reuse.azurewebsites.net/api/GetAllItems?code=-Fjj8lcCpsLQQFZSMehNNTAh_yOFTzo9OSfOmz__Bhj_AzFuizWnPg==&token=",
+    {
+      method: "POST",
+      body: JSON.stringify({ token: token }),
+    }
   )
     .then((res) => res.json())
     .then((data) => {
@@ -67,11 +81,31 @@
       generate_table("clothes");
       generate_table("accessories");
       generate_table("other");
+
+      let sum = 0;
+      Object.keys(inventory["clothes"]).forEach((type) => {
+        sum += inventory["clothes"][type];
+      });
+      document.querySelector("#clothesid").innerText = sum;
+      sum = 0;
+      Object.keys(inventory["accessories"]).forEach((type) => {
+        sum += inventory["accessories"][type];
+      });
+      document.querySelector("#accessoriesid").innerText = sum;
+      sum = 0;
+      Object.keys(inventory["other"]).forEach((type) => {
+        sum += inventory["other"][type];
+      });
+      document.querySelector("#otherid").innerText = sum;
     });
 
   function update_tables() {
     fetch(
-      "https://aggie-reuse.azurewebsites.net/api/GetAllItems?code=-Fjj8lcCpsLQQFZSMehNNTAh_yOFTzo9OSfOmz__Bhj_AzFuizWnPg=="
+      "https://aggie-reuse.azurewebsites.net/api/GetAllItems?code=-Fjj8lcCpsLQQFZSMehNNTAh_yOFTzo9OSfOmz__Bhj_AzFuizWnPg==&token=",
+      {
+        method: "POST",
+        body: JSON.stringify({ token: token }),
+      }
     )
       .then((res) => res.json())
       .then((data) => {
@@ -319,7 +353,7 @@
       "https://aggie-reuse.azurewebsites.net/api/RemoveItems?code=XrwbrEgE4nFtb2NOhvBGieQ4yLM0jSqzwOpsYZn6CntoAzFuAF3vSg==",
       {
         method: "POST",
-        body: JSON.stringify({ data: combinedItems }),
+        body: JSON.stringify({ data: combinedItems, token: token }),
       }
     );
     let text = await res.text();
@@ -377,7 +411,7 @@
       "https://aggie-reuse.azurewebsites.net/api/AddItems?code=Ms1gGUN9IEGdsysS0KuXM9xu7v5FD27YSLO0HNjOJthwAzFudx5FIQ==&clientId=default",
       {
         method: "POST",
-        body: JSON.stringify({ data: combinedItems }),
+        body: JSON.stringify({ data: combinedItems, token: token }),
       }
     );
     let text = await res.text();

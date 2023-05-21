@@ -39,6 +39,10 @@ header {
   margin-right: 20px;
 }
 
+.logoutButton:hover {
+  cursor: pointer;
+}
+
 h1 {
   margin: auto;
 }
@@ -257,7 +261,7 @@ svg {
   position: absolute;
   bottom: 30px;
   right: 30px;
-  background-color: pink;
+  background-color: rgb(255, 69, 100);
   padding: 10px;
   border: black 1px solid;
 }

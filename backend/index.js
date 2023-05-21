@@ -1,6 +1,28 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const { uri } = require("./config.json");
 let { Clothes, Accessories, Other } = require("./categories.json");
+const types = [
+  "dresses",
+  "jackets",
+  "long-sleeves/button ups",
+  "pants/jeans",
+  "shirts",
+  "shoes",
+  "shorts",
+  "skirts",
+  "sweaters/cardigans",
+  "tank tops",
+  "bags/backpacks",
+  "belts",
+  "hats",
+  "rings/jewelry",
+  "sunglasses",
+  "ties",
+  "books",
+  "household",
+  "misc",
+  "school supplies",
+];
 
 class Db {
   static async initializeDb() {
@@ -38,6 +60,33 @@ class Db {
       { type: item.type },
       { $inc: { quantity: quantity } }
     );
+    console.log(1);
+    if (quantity < 0) {
+      await this.client
+        .db("reuse")
+        .collection("history")
+        .insertOne({
+          type: item.type,
+          quantity: item.quantity,
+          date: new Date(
+            new Date() - Math.random() * 30 * (1 * 24 * 60 * 60 * 1000)
+          ),
+          operation: "removeItem",
+        });
+    } else {
+      await this.client
+        .db("reuse")
+        .collection("history")
+        .insertOne({
+          type: item.type,
+          quantity: item.quantity,
+          date: new Date(
+            new Date() - Math.random() * 30 * (1 * 24 * 60 * 60 * 1000)
+          ),
+          operation: "addItem",
+        });
+    }
+
     return result;
   }
 
@@ -121,51 +170,61 @@ async function add_categories(database) {
 async function run() {
   try {
     database = await Db.initializeDb();
-    let res;
-    res = await fetch(
-      "https://aggie-reuse.azurewebsites.net/api/AddItems?code=Ms1gGUN9IEGdsysS0KuXM9xu7v5FD27YSLO0HNjOJthwAzFudx5FIQ==&clientId=default",
-      {
-        method: "POST",
-        body: '{"data": [{"type": "shirts", "quantity": 5}]}',
-      }
-    );
-    console.log(await res.text());
-    res = await fetch(
-      "https://aggie-reuse.azurewebsites.net/api/GetAllItems?code=-Fjj8lcCpsLQQFZSMehNNTAh_yOFTzo9OSfOmz__Bhj_AzFuizWnPg=="
-    );
+    // let res;
+    // res = await fetch(
+    //   "https://aggie-reuse.azurewebsites.net/api/AddItems?code=Ms1gGUN9IEGdsysS0KuXM9xu7v5FD27YSLO0HNjOJthwAzFudx5FIQ==&clientId=default",
+    //   {
+    //     method: "POST",
+    //     body: '{"data": [{"type": "shirts", "quantity": 5}]}',
+    //   }
+    // );
+    // console.log(await res.text());
+    // res = await fetch(
+    //   "https://aggie-reuse.azurewebsites.net/api/GetAllItems?code=-Fjj8lcCpsLQQFZSMehNNTAh_yOFTzo9OSfOmz__Bhj_AzFuizWnPg=="
+    // );
+    // // console.log(await res.json());
+    // res = await fetch(
+    //   "https://aggie-reuse.azurewebsites.net/api/GetItem?code=tKMtn4I70JYJqtjQFc3r88hVk76_TG22_-sJtl8C0rcHAzFuDBo4dw==&type=shirts"
+    // );
+    // console.log(await res.text());
+    // res = await fetch(
+    //   "https://aggie-reuse.azurewebsites.net/api/RemoveItems?code=XrwbrEgE4nFtb2NOhvBGieQ4yLM0jSqzwOpsYZn6CntoAzFuAF3vSg==",
+    //   {
+    //     method: "POST",
+    //     body: '{"data": [{"type": "shirts", "quantity": 2}]}',
+    //   }
+    // );
+    // console.log(await res.text());
+    // res = await fetch(
+    //   "https://aggie-reuse.azurewebsites.net/api/AddType?code=PZygoORxBGcJRiPMffqKnYOsQo4PrUP9x1nJFdza8RnsAzFu5MQWPw==",
+    //   {
+    //     method: "POST",
+    //     body: '{"category": "clothes", "type": "boots"}',
+    //   }
+    // );
+    // console.log(await res.text());
+    // res = await fetch(
+    //   "https://aggie-reuse.azurewebsites.net/api/GetCategories?code=ndxaiFhA5WDFWWCzN6oJKf1Z_O_lECDFY-TzzwMmqpUfAzFuZ5E7aw=="
+    // );
     // console.log(await res.json());
-    res = await fetch(
-      "https://aggie-reuse.azurewebsites.net/api/GetItem?code=tKMtn4I70JYJqtjQFc3r88hVk76_TG22_-sJtl8C0rcHAzFuDBo4dw==&type=shirts"
-    );
-    console.log(await res.text());
-    res = await fetch(
-      "https://aggie-reuse.azurewebsites.net/api/RemoveItems?code=XrwbrEgE4nFtb2NOhvBGieQ4yLM0jSqzwOpsYZn6CntoAzFuAF3vSg==",
-      {
-        method: "POST",
-        body: '{"data": [{"type": "shirts", "quantity": 2}]}',
+    // res = await fetch(
+    //   "https://aggie-reuse.azurewebsites.net/api/RemoveType?code=GunNeGNCwCIqbA9Ptu0uy6DnfAIspCBPA1S8KJ-b3bRtAzFugLuS-Q==",
+    //   {
+    //     method: "POST",
+    //     body: '{"category": "clothes", "type": "boots"}',
+    //   }
+    // );
+    // console.log(await res.text());
+    for (let i = 0; i < 200; i++) {
+      let type = types[Math.floor(Math.random() * types.length)];
+      let quantity = Math.floor(Math.random() * 5);
+      let add = Math.random() < 0.5;
+      if (add) {
+        database.add({ type: type, quantity: quantity });
+      } else {
+        database.remove({ type: type, quantity: quantity });
       }
-    );
-    console.log(await res.text());
-    res = await fetch(
-      "https://aggie-reuse.azurewebsites.net/api/AddType?code=PZygoORxBGcJRiPMffqKnYOsQo4PrUP9x1nJFdza8RnsAzFu5MQWPw==",
-      {
-        method: "POST",
-        body: '{"category": "clothes", "type": "boots"}',
-      }
-    );
-    console.log(await res.text());
-    res = await fetch(
-      "https://aggie-reuse.azurewebsites.net/api/GetCategories?code=ndxaiFhA5WDFWWCzN6oJKf1Z_O_lECDFY-TzzwMmqpUfAzFuZ5E7aw=="
-    );
-    console.log(await res.json());
-    res = await fetch(
-      "https://aggie-reuse.azurewebsites.net/api/RemoveType?code=GunNeGNCwCIqbA9Ptu0uy6DnfAIspCBPA1S8KJ-b3bRtAzFugLuS-Q==",
-      {
-        method: "POST",
-        body: '{"category": "clothes", "type": "boots"}',
-      }
-    );
-    console.log(await res.text());
+    }
 
     // await add_categories(database);
     // await database.db.collection("history").deleteMany({});
@@ -174,7 +233,7 @@ async function run() {
     // await add_accessories(database);
     // await add_other(database);
   } finally {
-    await database.client.close();
+    // await database.client.close();
   }
 }
 
