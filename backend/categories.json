@@ -1,0 +1,23 @@
+{
+  "Clothes":[
+      "dresses",
+      "jackets",
+      "long-sleeves/button ups",
+      "pants/jeans",
+      "shirts",
+      "shoes",
+      "shorts",
+      "skirts",
+      "sweaters/cardigans",
+      "tank tops"
+    ],
+    "Accessories": [
+      "bags/backpacks",
+      "belts",
+      "hats",
+      "rings/jewelry",
+      "sunglasses",
+      "ties"
+    ],
+    "Other": ["books", "household", "misc", "school supplies"]
+}

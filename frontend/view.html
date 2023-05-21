@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="styles.css" rel="stylesheet" />
+    <script
+      src="https://kit.fontawesome.com/d296a4603c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="script.js" defer></script>
+
+    <title>Aggie Reuse</title>
+  </head>
+  <body>
+    <div id="result"></div>
+    <div class="main">
+      <header>
+        <img class="logo" src="media/logo.png" alt="logo" />
+        <h1>Aggie Reuse Inventory</h1>
+        <button class="logoutButton">Logout</button>
+      </header>
+      <div class="addPopup hidden">
+        <p
+          style="
+            font-size: 20px;
+            position: relative;
+            top: 20px;
+            left: 40px;
+            width: 200px;
+          "
+        >
+          Add Items
+        </p>
+        <div class="categoryContainer add">
+          <select class="category add">
+            <option value="">--Category--</option>
+            <option value="clothes">Clothes</option>
+            <option value="accessories">Accessories</option>
+            <option value="other">Other</option>
+          </select>
+          <select class="type add">
+            <option value="">--Type--</option>
+          </select>
+          <input type="number" class="quantity" step="1" min="1" value="1" />
+          <i class="fa-solid fa-trash-can"></i>
+        </div>
+        <button id="closeBtn" class="add">
+          <i class="fa-solid fa-xmark fa-2xl"></i>
+        </button>
+        <div id="addBtn">Submit</div>
+      </div>
+      <div class="removePopup hidden">
+        <p
+          style="
+            font-size: 20px;
+            position: relative;
+            top: 20px;
+            left: 40px;
+            width: 200px;
+          "
+        >
+          Remove Items
+        </p>
+        <div class="categoryContainer remove">
+          <select class="category remove">
+            <option value="">--Category--</option>
+            <option value="clothes">Clothes</option>
+            <option value="accessories">Accessories</option>
+            <option value="other">Other</option>
+          </select>
+          <select class="type remove">
+            <option value="">--Type--</option>
+          </select>
+          <input type="number" class="quantity" step="1" min="1" value="1" />
+          <i class="fa-solid fa-trash-can"></i>
+        </div>
+        <button id="closeBtn" class="remove">
+          <i class="fa-solid fa-xmark fa-2xl"></i>
+        </button>
+        <div id="removeBtn">Submit</div>
+      </div>
+      <div class="buttonContainer">
+        <div class="container">
+          <div class="center">
+            <button id="add-btn" class="btn">
+              <svg
+                width="180px"
+                height="60px"
+                viewBox="0 0 180 60"
+                class="border"
+              >
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="bg-line"
+                />
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="hl-line"
+                />
+              </svg>
+              <span>ADD</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="center">
+            <button id="remove-btn" class="btn">
+              <svg
+                width="180px"
+                height="60px"
+                viewBox="0 0 180 60"
+                class="border"
+              >
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="bg-line"
+                />
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="hl-line"
+                />
+              </svg>
+              <span>REMOVE</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="center">
+            <button id="analytics-btn" class="btn">
+              <svg
+                width="180px"
+                height="60px"
+                viewBox="0 0 180 60"
+                class="border"
+              >
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="bg-line"
+                />
+                <polyline
+                  points="179,1 179,59 1,59 1,1 179,1"
+                  class="hl-line"
+                />
+              </svg>
+              <span>ANALYTICS</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="overview">
+        <div class="status">
+          <p>Clothes</p>
+          <img class="overviewPic" src="media/clothesPic.png" />
+          <p>1</p>
+        </div>
+        <div class="status">
+          <p>Accessories</p>
+          <img class="overviewPic" src="media/accPic.png" />
+          <p>1</p>
+        </div>
+        <div class="status">
+          <p>Other</p>
+          <img class="overviewPic" src="media/otherPic.png" />
+          <p>1</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="viewtitle">
+      <p>Overview</p>
+    </div>
+
+    <div class="content-table">
+      <table class="clothes"></table>
+
+      <table class="accessories"></table>
+
+      <table class="other"></table>
+    </div>
+  </body>
+</html>
