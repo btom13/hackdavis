@@ -1,0 +1,6 @@
+{
+    data: [
+      { type: "shirt", size: "m", quantity: 1 },
+      { type: "jacket", size: "l", quantity: 2 },
+    ],
+}
